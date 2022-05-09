@@ -1,4 +1,3 @@
-#from django.shortcuts import render
 from .serializers import UserSerializer , AdminSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -15,7 +14,7 @@ class UserRegisterView(APIView):
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=False)
-        serializer = UsersSerializer(snippet, many=True)
+        serializer = UserSerializer(snippet, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -33,7 +32,7 @@ class AdminRegisterView(APIView):
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=True)
-        serializer = AdminsSerializer(snippet, many=True)
+        serializer = AdminSerializer(snippet, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

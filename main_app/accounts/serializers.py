@@ -16,7 +16,7 @@ except ImportError:
 
 
 class UserSerializer(serializers.Serializer):
-    validators = [MinLengthValidator(2, "2 or more characters"), MaxLengthValidator(100, "Less than 100 characters")]
+    validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
     
     username = serializers.CharField(required=True, max_length=100, validators=validators)
     email = serializers.EmailField(required=True, max_length=100, validators=validators)
@@ -67,7 +67,7 @@ class UserSerializer(serializers.Serializer):
 
 
 class AdminSerializer(serializers.Serializer):
-    validators = [MinLengthValidator(2, "2 or more characters"), MaxLengthValidator(100, "Less than 100 characters")]
+    validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
     
     username  = serializers.CharField(required=True, max_length=100, validators=validators)
     email     = serializers.EmailField(required=True, max_length=100, validators=validators)
