@@ -1,7 +1,13 @@
 from django.urls import path
-from . import views
+from .views import (
+    index, 
+    TutorListView, 
+    TutorDetailView
+    )
 
 urlpatterns = [
-    path('', views.index),
-    path('tutor', views.TutorListView.as_view(), name='tutor')
+    path('', index),
+    path('tutor/', TutorListView.as_view(), name='tutor-list'),
+    path('tutor/<int:id>', TutorDetailView.as_view(), name='tutor-deatail'),
 ]
+

@@ -14,7 +14,6 @@ except ImportError:
 
 
 
-
 class UserSerializer(serializers.Serializer):
     validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
     
@@ -61,7 +60,6 @@ class UserSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         
         return user
-
 
 
 

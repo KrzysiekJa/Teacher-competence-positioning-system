@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 
-class UserRegisterView(APIView):
+class UserRegistrationView(APIView):
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=False)
@@ -28,7 +28,7 @@ class UserRegisterView(APIView):
 
 
 
-class AdminRegisterView(APIView):
+class AdminRegistrationView(APIView):
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=True)
@@ -41,3 +41,4 @@ class AdminRegisterView(APIView):
             serializer.save(request)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
