@@ -3,10 +3,8 @@ from django.http import HttpResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models.Tutor import Tutor
-from .models.Assessment import Assessment
-from .models.Institution import Institution
-from .serializers import (
+from ..models.Tutor import Tutor
+from ..serializers import (
     TutorSerializer, 
     TutorDetailSerializer
     )
@@ -15,10 +13,11 @@ from .serializers import (
 
 def index(request):
     if request.method == 'GET':
-        return HttpResponse('<h2> View!? </h2>')
+        return HttpResponse('<h1> Bartek!? </h1>')
     
     if request.method == 'POST':
         return HttpResponse('<h2> Post?! </h2>')
+
 
 
 class TutorListView(APIView):
@@ -34,6 +33,7 @@ class TutorListView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class TutorDetailView(APIView):
@@ -61,6 +61,5 @@ class TutorDetailView(APIView):
         snippet = self.get_object(id)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 
