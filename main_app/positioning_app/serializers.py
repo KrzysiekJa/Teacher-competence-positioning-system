@@ -8,30 +8,42 @@ from .models.Tutor import Tutor
 class AssessmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assessment
-        fields = '__all__'
+        fields = ['user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
+        # excluded 'creation_date'
 
 
 class AssessmentDetailSerializer(serializers.ModelSerializer):
-    pass
-    
-
-class InstitutionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Institution
-        fields = '__all__'
-
-
-class InstitutionDetailSerializer(serializers.ModelSerializer):
-    pass
+        model = Assessment
+        fields = ['user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
+        # excluded 'creation_date'
 
 
 class TutorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tutor
-        fields = '__all__'
+        exclude = ['creation_date']
 
 
 class TutorDetailSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = Tutor
+        exclude = ['creation_date']
+
+
+class InstitutionSerializer(serializers.ModelSerializer):
+    tutors = serializers.PrimaryKeyRelatedField(queryset=Tutor.objects.all(), many=True, required=False)
+    
+    class Meta:
+        model = Institution
+        exclude = ['creation_date']
+
+
+class InstitutionDetailSerializer(serializers.ModelSerializer):
+    tutors = serializers.PrimaryKeyRelatedField(queryset=Tutor.objects.all(), many=True, required=False)
+    
+    class Meta:
+        model = Institution
+        exclude = ['creation_date']
 
 

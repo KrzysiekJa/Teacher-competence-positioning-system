@@ -17,11 +17,11 @@ from .views.TutorViews import (
 
 urlpatterns = [
     path('', index),
-    path('assessment/', AssessmentListView.as_view(), name='assessment-list'),
-    path('assessment/<int:id>', AssessmentDetailView.as_view(), name='assessment-deatail'),
-    path('institution/', InstitutionListView.as_view(), name='institution-list'),
-    path('institution/<int:id>', InstitutionDetailView.as_view(), name='institution-deatail'),
-    path('tutor/', TutorListView.as_view(), name='tutor-list'),
-    path('tutor/<int:id>', TutorDetailView.as_view(), name='tutor-deatail'),
+    path('assessments/', AssessmentListView.as_view(), name='assessment-list'),
+    path('assessments/<int:id>', AssessmentDetailView.as_view(), name='assessment-deatail'),
+    path('institutions/', InstitutionListView.as_view(), name='institution-list'),
+    path('institutions/<int:id>', InstitutionDetailView.as_view(), name='institution-deatail'),
+    path('tutors/', TutorListView.as_view(), name='tutor-list'),
+    path('tutors/<int:id>', TutorDetailView.as_view(), name='tutor-deatail'),
 ]
 
