@@ -12,3 +12,6 @@ class Tutor(models.Model):
     last_edition_date = models.DateTimeField(default=timezone.now)
     description = models.TextField(max_length=200, null=True, blank= True)
     nacionality = models.CharField(max_length=50, null=True, blank= True)
+    
+    def __str__(self):
+        return self.name + self.surname

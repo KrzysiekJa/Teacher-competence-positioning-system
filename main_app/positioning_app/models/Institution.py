@@ -4,15 +4,16 @@ from .Tutor import Tutor
 
 
 class Institution(models.Model):
-    address = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True, default='noname-institution')
+    address = models.CharField(max_length=100, unique=True, null=True)
     extra_information = models.TextField(max_length=200, null=True, blank= True)
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    profile = models.CharField(max_length=50, null=True, blank= True)
+    profile = models.CharField(max_length=50, null=True, blank=True)
     creation_date = models.DateTimeField(default=timezone.now)
     last_edition_date = models.DateTimeField(default=timezone.now)
+    tutors = models.ManyToManyField(Tutor, related_name='institutions')
+    
+    def __str__(self):
+        return self.name
 
-
-class TutorInstitution(models.Model):
-    tutor_id = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    institution_id = models.ForeignKey(Institution, on_delete=models.CASCADE)
