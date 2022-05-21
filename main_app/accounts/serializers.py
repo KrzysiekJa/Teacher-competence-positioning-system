@@ -27,7 +27,6 @@ class UserSerializer(serializers.Serializer):
         email = get_adapter().clean_email(email)
         if email and email_address_exists(email):
             raise serializers.ValidationError( "A user is already registered with this e-mail address.")
-            
         return email
     
     
@@ -40,7 +39,6 @@ class UserSerializer(serializers.Serializer):
             raise serializers.ValidationError("Both password fields didn't match.")
         if emoji.emoji_count(data["password1"]):
             raise serializers.ValidationError("Password can not contain emoji.")
-        
         return data
     
     
@@ -78,7 +76,6 @@ class AdminSerializer(serializers.Serializer):
         email = get_adapter().clean_email(email)
         if email and email_address_exists(email):
             raise serializers.ValidationError( "A user is already registered with this e-mail address.")
-            
         return email
     
     
@@ -91,7 +88,6 @@ class AdminSerializer(serializers.Serializer):
             raise serializers.ValidationError("Both password fields didn't match.")
         if emoji.emoji_count(data["password1"]):
             raise serializers.ValidationError("Password can not contain emoji.")
-        
         return data
     
     
