@@ -12,15 +12,6 @@ from ..serializers import (
 
 
 
-def index(request):
-    if request.method == 'GET':
-        return HttpResponse('<h1> Bartek!? </h1>')
-    
-    if request.method == 'POST':
-        return HttpResponse('<h2> Post?! </h2>')
-
-
-
 class TutorListView(APIView):
     
     def get(self, request, format=None):
@@ -28,6 +19,10 @@ class TutorListView(APIView):
         serializer = TutorSerializer(tutors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+
+class TutorPostView(APIView):
+    
     def post(self, request, format=None):
         serializer = TutorSerializer(data=request.data)
         if serializer.is_valid():

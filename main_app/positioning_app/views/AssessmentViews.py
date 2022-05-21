@@ -19,6 +19,10 @@ class AssessmentListView(APIView):
         serializer = AssessmentSerializer(assessments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+
+class AssessmentPostView(APIView):
+
     def post(self, request, format=None):
         serializer = AssessmentSerializer(data=request.data)
         if serializer.is_valid():

@@ -19,6 +19,10 @@ class InstitutionListView(APIView):
         serializer = InstitutionSerializer(institutions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+
+class InstitutionPostView(APIView):
+
     def post(self, request, format=None):
         serializer = InstitutionSerializer(data=request.data)
         if serializer.is_valid():
