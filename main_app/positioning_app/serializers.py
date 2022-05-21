@@ -8,14 +8,14 @@ from .models.Tutor import Tutor
 class AssessmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assessment
-        fields = ['user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
+        fields = ['id', 'user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
         # excluded 'creation_date'
 
 
 class AssessmentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assessment
-        fields = ['user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
+        fields = ['id', 'user_id', 'tutor_id', 'content', 'grade', 'last_edition_date']
         # excluded 'creation_date'
 
 
