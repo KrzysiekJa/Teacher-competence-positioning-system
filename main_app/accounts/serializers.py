@@ -1,7 +1,6 @@
 import emoji
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from django.contrib.admin import ModelAdmin
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 try:
@@ -14,14 +13,8 @@ except ImportError:
 
 
 
-class UserSerializer(serializers.Serializer):
+class ValidationSerializer(serializers.Serializer):
     validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
-    
-    username = serializers.CharField(required=True, max_length=30, validators=validators)
-    email = serializers.EmailField(required=True, max_length=30, validators=validators)
-    password1 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
-    password2 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
-    
     
     def validate_email(self, email):
         email = get_adapter().clean_email(email)
@@ -29,10 +22,8 @@ class UserSerializer(serializers.Serializer):
             raise serializers.ValidationError( "A user is already registered with this e-mail address.")
         return email
     
-    
     def validate_password1(self, password):
         return get_adapter().clean_password(password)
-    
     
     def validate(self, data):
         if data["password1"] != data["password2"]:
@@ -40,6 +31,17 @@ class UserSerializer(serializers.Serializer):
         if emoji.emoji_count(data["password1"]):
             raise serializers.ValidationError("Password can not contain emoji.")
         return data
+
+
+
+
+class UserSerializer(ValidationSerializer):
+    validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
+    
+    username = serializers.CharField(required=True, max_length=30, validators=validators)
+    email = serializers.EmailField(required=True, max_length=30, validators=validators)
+    password1 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
+    password2 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
     
     
     def get_cleaned_data(self):
@@ -62,7 +64,7 @@ class UserSerializer(serializers.Serializer):
 
 
 
-class AdminSerializer(serializers.Serializer):
+class AdminSerializer(ValidationSerializer):
     validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
     
     username  = serializers.CharField(required=True, max_length=30, validators=validators)
@@ -70,25 +72,6 @@ class AdminSerializer(serializers.Serializer):
     password1 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
     password2 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
     is_superuser = serializers.BooleanField(default=True)
-    
-    
-    def validate_email(self, email):
-        email = get_adapter().clean_email(email)
-        if email and email_address_exists(email):
-            raise serializers.ValidationError( "A user is already registered with this e-mail address.")
-        return email
-    
-    
-    def validate_password1(self, password):
-        return get_adapter().clean_password(password)
-    
-    
-    def validate(self, data):
-        if data["password1"] != data["password2"]:
-            raise serializers.ValidationError("Both password fields didn't match.")
-        if emoji.emoji_count(data["password1"]):
-            raise serializers.ValidationError("Password can not contain emoji.")
-        return data
     
     
     def get_cleaned_data(self):
@@ -111,3 +94,4 @@ class AdminSerializer(serializers.Serializer):
         setup_user_email(request, admin, [])
         
         return admin
+
