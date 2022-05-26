@@ -4,6 +4,8 @@ from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from ..models.Institution import Institution
 from ..serializers import (
     InstitutionSerializer, 
@@ -14,6 +16,9 @@ from ..serializers import (
 
 class InstitutionListView(APIView):
     
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAuthenticatedOrReadOnly]
+    
     def get(self, request, format=None):
         institutions = Institution.objects.all()
         serializer = InstitutionSerializer(institutions, many=True)
@@ -22,6 +27,9 @@ class InstitutionListView(APIView):
 
 
 class InstitutionPostView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAdminUser]
 
     def post(self, request, format=None):
         serializer = InstitutionSerializer(data=request.data)
@@ -33,6 +41,9 @@ class InstitutionPostView(APIView):
 
 
 class InstitutionDetailView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAdminUser]
 
     def get_object(self, id):
         try:
@@ -40,6 +51,7 @@ class InstitutionDetailView(APIView):
         except Institution.DoesNotExist:
             raise Http404
 
+    #@permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = InstitutionDetailSerializer(snippet)

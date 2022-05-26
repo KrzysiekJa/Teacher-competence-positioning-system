@@ -34,7 +34,6 @@ class ValidationSerializer(serializers.Serializer):
 
 
 
-
 class UserSerializer(ValidationSerializer):
     validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
     
@@ -60,7 +59,6 @@ class UserSerializer(ValidationSerializer):
         setup_user_email(request, user, [])
         
         return user
-
 
 
 

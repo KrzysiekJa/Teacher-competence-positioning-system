@@ -4,6 +4,8 @@ from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from ..models.Assessment import Assessment
 from ..serializers import (
     AssessmentSerializer, 
@@ -14,6 +16,9 @@ from ..serializers import (
 
 class AssessmentListView(APIView):
     
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAuthenticatedOrReadOnly]
+    
     def get(self, request, format=None):
         assessments = Assessment.objects.all()
         serializer = AssessmentSerializer(assessments, many=True)
@@ -22,6 +27,9 @@ class AssessmentListView(APIView):
 
 
 class AssessmentPostView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAdminUser]
 
     def post(self, request, format=None):
         serializer = AssessmentSerializer(data=request.data)
@@ -33,6 +41,9 @@ class AssessmentPostView(APIView):
 
 
 class AssessmentDetailView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAdminUser]
 
     def get_object(self, id):
         try:
@@ -40,6 +51,7 @@ class AssessmentDetailView(APIView):
         except Assessment.DoesNotExist:
             raise Http404
 
+    #@permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = AssessmentDetailSerializer(snippet)

@@ -8,9 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 
 
 
-
-
 class UserRegistrationView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAuthenticated]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=False)
@@ -26,9 +27,10 @@ class UserRegistrationView(APIView):
 
 
 
-
-
 class AdminRegistrationView(APIView):
+    
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes     = [IsAuthenticated]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=True)
