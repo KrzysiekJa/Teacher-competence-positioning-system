@@ -61,7 +61,7 @@ class InstitutionDetailView(APIView):
         snippet = self.get_object(id)
         serializer = InstitutionDetailSerializer(snippet, data=request.data)
         if serializer.is_valid():
-            serializer.data['last_edition_date'] = timezone.now
+            serializer.validated_data['last_edition_date'] = timezone.now
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
