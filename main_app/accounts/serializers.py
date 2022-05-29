@@ -33,13 +33,11 @@ class ValidationSerializer(serializers.Serializer):
 
 
 
-class UserSerializer(ValidationSerializer):
-    validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
-    
-    username = serializers.CharField(required=True, max_length=30, validators=validators)
-    email = serializers.EmailField(required=True, max_length=30, validators=validators)
-    password1 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
-    password2 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
+class UserSerializer(ValidationSerializer):    
+    username  = serializers.CharField(required=True, min_length=7, max_length=30)
+    email     = serializers.EmailField(required=True, min_length=7, max_length=30)
+    password1 = serializers.CharField(write_only=True, min_length=7, max_length=30, style={"input_type": "password"})
+    password2 = serializers.CharField(write_only=True, min_length=7, max_length=30, style={"input_type": "password"})
     
     
     def get_cleaned_data(self):
@@ -61,13 +59,11 @@ class UserSerializer(ValidationSerializer):
 
 
 
-class AdminSerializer(ValidationSerializer):
-    validators = [MinLengthValidator(7, "7 or more characters"), MaxLengthValidator(30, "Less than 30 characters")]
-    
-    username  = serializers.CharField(required=True, max_length=30, validators=validators)
-    email     = serializers.EmailField(required=True, max_length=30, validators=validators)
-    password1 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
-    password2 = serializers.CharField(write_only=True, max_length=30, style={"input_type": "password"}, validators=validators)
+class AdminSerializer(ValidationSerializer):    
+    username  = serializers.CharField(required=True, min_length=7, max_length=30)
+    email     = serializers.EmailField(required=True, min_length=7, max_length=30)
+    password1 = serializers.CharField(write_only=True, min_length=7, max_length=30, style={"input_type": "password"})
+    password2 = serializers.CharField(write_only=True, min_length=7, max_length=30, style={"input_type": "password"})
     is_superuser = serializers.BooleanField(default=True)
     
     
