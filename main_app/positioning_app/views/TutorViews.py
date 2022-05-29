@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from .utils import method_permission_classes
 from ..models.Tutor import Tutor
 from ..serializers import (
     TutorSerializer, 
@@ -51,7 +52,7 @@ class TutorDetailView(APIView):
         except Tutor.DoesNotExist:
             raise Http404
 
-    #@permission_classes([IsAuthenticatedOrReadOnly])
+    #@method_permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = TutorDetailSerializer(snippet)
