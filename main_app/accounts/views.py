@@ -4,14 +4,14 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 
 
 
 class UserRegistrationView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    permission_classes     = [AllowAny]
+    permission_classes = [AllowAny]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=False)
@@ -20,17 +20,21 @@ class UserRegistrationView(APIView):
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
+        data = {}
         if serializer.is_valid():
-            serializer.save(request)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user  = serializer.save(request)
+            token = Token.objects.create(user=user)
+            data['username'] = user.username
+            data['email'] = user.email
+            data['token'] = token.key
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
 class AdminRegistrationView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    permission_classes     = [AllowAny]
+    permission_classes = [AllowAny]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=True)
@@ -39,8 +43,13 @@ class AdminRegistrationView(APIView):
 
     def post(self, request, format=None):
         serializer = AdminSerializer(data=request.data)
+        data = {}
         if serializer.is_valid():
-            serializer.save(request)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            admin = serializer.save(request)
+            token = Token.objects.create(user=admin)
+            data['username'] = admin.username
+            data['email'] = admin.email
+            data['token'] = token.key
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

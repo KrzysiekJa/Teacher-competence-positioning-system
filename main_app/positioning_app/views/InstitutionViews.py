@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .utils import method_permission_classes
 from ..models.Institution import Institution
 from ..serializers import (
@@ -30,7 +30,7 @@ class InstitutionListView(APIView):
 class InstitutionPostView(APIView):
     
     authentication_classes = [TokenAuthentication]
-    permission_classes     = [IsAdminUser]
+    permission_classes     = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = InstitutionSerializer(data=request.data)
@@ -44,7 +44,7 @@ class InstitutionPostView(APIView):
 class InstitutionDetailView(APIView):
     
     authentication_classes = [TokenAuthentication]
-    permission_classes     = [IsAdminUser]
+    permission_classes     = [IsAuthenticated]
 
     def get_object(self, id):
         try:
