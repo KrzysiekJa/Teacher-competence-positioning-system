@@ -17,8 +17,8 @@ from ..serializers import (
 
 class TutorListView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, format=None):
         tutors = Tutor.objects.all()
@@ -29,8 +29,8 @@ class TutorListView(APIView):
 
 class TutorPostView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
     
     def post(self, request, format=None):
         serializer = TutorSerializer(data=request.data)
@@ -43,8 +43,8 @@ class TutorPostView(APIView):
 
 class TutorDetailView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
 
     def get_object(self, id):
         try:
@@ -52,7 +52,7 @@ class TutorDetailView(APIView):
         except Tutor.DoesNotExist:
             raise Http404
 
-    #@method_permission_classes([IsAuthenticatedOrReadOnly])
+    @method_permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = TutorDetailSerializer(snippet)

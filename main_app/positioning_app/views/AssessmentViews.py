@@ -17,8 +17,8 @@ from ..serializers import (
 
 class AssessmentListView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, format=None):
         assessments = Assessment.objects.all()
@@ -29,8 +29,8 @@ class AssessmentListView(APIView):
 
 class AssessmentPostView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
 
     def post(self, request, format=None):
         serializer = AssessmentSerializer(data=request.data)
@@ -43,8 +43,8 @@ class AssessmentPostView(APIView):
 
 class AssessmentDetailView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
 
     def get_object(self, id):
         try:
@@ -52,7 +52,7 @@ class AssessmentDetailView(APIView):
         except Assessment.DoesNotExist:
             raise Http404
 
-    #@method_permission_classes([IsAuthenticatedOrReadOnly])
+    @method_permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = AssessmentDetailSerializer(snippet)

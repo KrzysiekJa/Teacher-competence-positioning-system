@@ -17,8 +17,8 @@ from ..serializers import (
 
 class InstitutionListView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, format=None):
         institutions = Institution.objects.all()
@@ -29,8 +29,8 @@ class InstitutionListView(APIView):
 
 class InstitutionPostView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
 
     def post(self, request, format=None):
         serializer = InstitutionSerializer(data=request.data)
@@ -43,8 +43,8 @@ class InstitutionPostView(APIView):
 
 class InstitutionDetailView(APIView):
     
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes     = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAdminUser]
 
     def get_object(self, id):
         try:
@@ -52,7 +52,7 @@ class InstitutionDetailView(APIView):
         except Institution.DoesNotExist:
             raise Http404
 
-    #@method_permission_classes([IsAuthenticatedOrReadOnly])
+    @method_permission_classes([IsAuthenticatedOrReadOnly])
     def get(self, request, id, format=None):
         snippet = self.get_object(id)
         serializer = InstitutionDetailSerializer(snippet)
