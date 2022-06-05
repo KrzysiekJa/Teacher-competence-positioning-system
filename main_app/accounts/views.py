@@ -4,14 +4,14 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 
 
 class UserRegistrationView(APIView):
     
-    authentication_classes = [TokenAuthentication]
-    permission_classes     = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    permission_classes     = [AllowAny]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=False)
@@ -29,8 +29,8 @@ class UserRegistrationView(APIView):
 
 class AdminRegistrationView(APIView):
     
-    authentication_classes = [TokenAuthentication]
-    permission_classes     = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    permission_classes     = [AllowAny]
     
     def get(self, request, format=None):
         snippet = User.objects.filter(is_superuser=True)
