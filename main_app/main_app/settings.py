@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-btw2(8f&#8xp@%d@a+v-wsr5-%)_xop3$!^*+wurb73o@6)qqr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'corsheaders',
+    
     'positioning_app',
     'accounts'
 ]
@@ -140,13 +142,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
